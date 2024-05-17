@@ -1,0 +1,18 @@
+<form hx-swap="outerHTML" hx-post="/contacts">
+    name: <input
+        {% if let Some(value) = form_data.values.get("name") %}
+            value="{{ value }}"
+        {% endif %}
+        type="text" name="name"
+        />
+    email: <input
+        {% if let Some(value) = form_data.values.get("email") %}
+            value="{{ value }}"
+        {% endif %}
+        type="text" name="email"
+        />
+    {% if let Some(error) = form_data.errors.get("email") %}
+        <div style="color: red">{{ error }}</div>
+    {% endif %}
+    <button type="submit">Create Contact</button>
+</form>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        <link href="css/style.css" rel="stylesheet">
+        <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/index.css">
+    </head>
+    <body>
+        {% include "form.html" %}
+        <hr />
+        {% include "display.html" %}
+        <script>
+            document.addEventListener("DOMContentLoaded", (event) => {
+                document.body.addEventListener('htmx:beforeSwap', function(evt) {
+                    if (evt.detail.xhr.status === 422) {
+                        // allow 422 responses to swap as we are using this as a signal that
+                        // a form was submitted with bad data and want to rerender with the
+                        // errors
+                        //
+                        // set isError to false to avoid error logging in console
+                        evt.detail.shouldSwap = true;
+                        evt.detail.isError = false;
+                    }
+                });
+            })
+        </script>
+    </body>
+</html>
